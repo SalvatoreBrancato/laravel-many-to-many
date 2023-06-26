@@ -140,9 +140,12 @@ class ProjectController extends Controller
         $mod_post->update($form_data);
 
         if( $request->has('technology') ){
-           
             $mod_post ->technologies()->sync($request->technology);
-           }
+        
+        }elseif(!$request->has('technologies')){
+            $mod_post->technologies()->sync([]);                
+
+        }
 
 
 
