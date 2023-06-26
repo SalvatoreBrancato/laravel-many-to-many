@@ -139,6 +139,13 @@ class ProjectController extends Controller
         
         $mod_post->update($form_data);
 
+        if( $request->has('technology') ){
+           
+            $mod_post ->technologies()->sync($request->technology);
+           }
+
+
+
         // if( $request->hasFile('path') ){
 
 
@@ -169,7 +176,9 @@ class ProjectController extends Controller
         // if( $post->path ){
         //     Storage::delete($post->path);
         // } 
+
         $mod_post =  Project::find($id);
+        $mod_post->technologies()->sync([]);
         $mod_post->delete();
         return redirect()->route('admin.index.index');
     }

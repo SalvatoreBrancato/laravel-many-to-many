@@ -50,16 +50,24 @@
         <div class="form-group mt-3">
             @foreach($technology as $elem)
               <div class="form-check">
+
+            @if ( $errors->any() )
                 <input class="form-check-input" 
                 type="checkbox" 
                 value="{{$elem->id}}" 
                 id="checkbox{{$elem->id}}" 
                 name="technology[]"
-                @if ( $errors->any() )
-                    {{ in_array( $elem->id, old( 'technology', [] ) ) ? 'checked' : '' }}
-                @else
-	                {{ ( $technology->projects->contains($elem) ) ? 'checked' : '' }}
-                @endif>
+                {{ in_array( $elem->id, old( 'technology', [] ) ) ? 'checked' : '' }}>
+
+            @else
+                <input class="form-check-input" 
+                type="checkbox" 
+                value="{{$elem->id}}" 
+                id="checkbox{{$elem->id}}" 
+                name="technology[]"
+	            {{ ( $mod_post->technologies->contains($elem) ) ? 'checked' : '' }}>
+            @endif
+
                 <label class="form-check-label" for="checkbox{{$elem->id}}">
                      {{$elem->name}}
                 </label>
