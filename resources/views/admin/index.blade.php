@@ -14,6 +14,11 @@
                   @if($elem->type)
                   <div>{{$elem->type->name}}</div>
                   @endif
+                 {{-- @if( $elem->technology )
+                    
+                        <div> {{ $elem->technology->name }} </div>
+                    
+                  @endif --}}
                 </div>    
             </div>
         </a>
