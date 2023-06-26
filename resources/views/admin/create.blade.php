@@ -49,10 +49,18 @@
             <input type="file" id="path" name="path"  class="form-control">
         </div>
 
-        {{-- <div class="form-group">
-            <label for="projects-thumb" class="form-label">Image</label>
-            <input type="text" id="projects-thumb" name="thumb"  class="form-control">
-        </div> --}}
+        <div class="form-group mt-3">
+            @foreach($technology as $elem)
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="{{$elem->id}}" id="checkbox{{$elem->id}}" name="technology[]">
+                <label class="form-check-label" for="checkbox{{$elem->id}}">
+                     {{$elem->name}}
+                </label>
+              </div>
+            @endforeach
+        </div>
+
+        </div>
 
         <button type="submit" class="btn btn-primary mt-2">Inserisci nuovo progetto</button>
 

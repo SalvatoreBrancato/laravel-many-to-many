@@ -43,8 +43,28 @@
         </div>
 
         <div class="form-group">
-            <label for="projects-path" class="form-label">Lang</label>
+            <label for="projects-path" class="form-label">Immagini</label>
             <input type="file" id="projects-path" name="path"  class="form-control">
+        </div>
+
+        <div class="form-group mt-3">
+            @foreach($technology as $elem)
+              <div class="form-check">
+                <input class="form-check-input" 
+                type="checkbox" 
+                value="{{$elem->id}}" 
+                id="checkbox{{$elem->id}}" 
+                name="technology[]"
+                @if ( $errors->any() )
+                    {{ in_array( $elem->id, old( 'technology', [] ) ) ? 'checked' : '' }}
+                @else
+	                {{ ( $technology->projects->contains($elem) ) ? 'checked' : '' }}
+                @endif>
+                <label class="form-check-label" for="checkbox{{$elem->id}}">
+                     {{$elem->name}}
+                </label>
+              </div>
+            @endforeach
         </div>
 
         <button type="submit" class="btn btn-primary mt-2">Inserisci modifiche</button>

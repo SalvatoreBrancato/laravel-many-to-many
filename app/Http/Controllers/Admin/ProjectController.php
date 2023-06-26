@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Models\Admin\Type;
+use App\Models\Admin\Technology;
 
 
 
@@ -33,7 +34,9 @@ class ProjectController extends Controller
     public function create()
     {
         $types = Type::all();
-        return view('admin.create', compact('types'));
+        $technology = Technology::all();
+
+        return view('admin.create', compact('types', 'technology'));
     }
 
     /**
@@ -54,23 +57,22 @@ class ProjectController extends Controller
         // ]);
 
         $form_data = $request->all();
-
-     
+        $create = Project::create($form_data);
+        //$new_project = new Project();
+        //$new_project->fill($form_data);
 
         if ($request->hasFile('path')) {
-            
-
             //     //Genere un path di dove verrà salvata l'iimagine nel progetto
             $img_path = Storage::disk('public')->put('uploads', $request['path']);
 
             $form_data['path'] = $img_path;
         }
 
-        $new_project = new Project();
+        if( $request->has('technology') ){
+            $create ->technologies()->attach($request->technology);
+           }
 
-        $new_project->fill($form_data);
-
-        $new_project->save();
+        $create->save();
 
         return redirect()->route('admin.index.index');
     }
@@ -98,7 +100,8 @@ class ProjectController extends Controller
     {
         $mod_post =  Project::find($id);
         $types = Type::all();
-        return view('admin.edit', compact('mod_post','types'));
+        $technology = Technology::all();
+        return view('admin.edit', compact('mod_post','types','technology'));
         
     }
 
@@ -163,9 +166,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-
-
-
         // if( $post->path ){
         //     Storage::delete($post->path);
         // } 
